@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-accent="violet">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' file: data: blob:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: file:; font-src 'self' data:; connect-src 'self' https: http: file:; media-src 'self' data: blob:; object-src 'none'">
+<title>AIComic Builder Studio — Unlimited Edition</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app-shell">
+
+  <aside id="sidebar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true"><span>AC</span></div>
+      <div class="brand-text">
+        <strong>AIComic Builder</strong>
+        <small>STUDIO · UNLIMITED</small>
+      </div>
+      <button class="icon-btn brand-collapse" id="btnCollapse" title="Collapse sidebar">‹</button>
+    </div>
+
+    <div class="sidebar-scroll">
+      <div class="nav-group">
+        <div class="nav-label" data-i18n="nav.workspace">WORKSPACE</div>
+        <button class="nav-item active" data-route="dashboard"><span class="ni">◈</span><span class="nav-text" data-i18n="nav.dashboard">Dashboard</span><kbd>Ctrl+1</kbd></button>
+        <button class="nav-item" data-route="create"><span class="ni">✦</span><span class="nav-text" data-i18n="nav.create">Create Studio</span><kbd>Ctrl+N</kbd></button>
+        <button class="nav-item" data-route="projects"><span class="ni">▦</span><span class="nav-text" data-i18n="nav.projects">My Projects</span><span class="badge" id="navProjectCount">0</span></button>
+        <button class="nav-item" data-route="editor"><span class="ni">✎</span><span class="nav-text" data-i18n="nav.editor">Comic Editor</span></button>
+        <button class="nav-item" data-route="reader"><span class="ni">▤</span><span class="nav-text" data-i18n="nav.reader">Reader</span></button>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label" data-i18n="nav.library">LIBRARY</div>
+        <button class="nav-item" data-route="characters"><span class="ni">♟</span><span class="nav-text" data-i18n="nav.characters">Characters</span><span class="badge" id="navCharCount">0</span></button>
+        <button class="nav-item" data-route="styles"><span class="ni">◐</span><span class="nav-text" data-i18n="nav.styles">Style Lab</span><span class="badge" id="navStyleCount">0</span></button>
+        <button class="nav-item" data-route="inspiration"><span class="ni">✧</span><span class="nav-text" data-i18n="nav.inspiration">Inspiration</span></button>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label" data-i18n="nav.tools">TOOLS</div>
+        <button class="nav-item" data-route="slicer"><span class="ni">✂</span><span class="nav-text" data-i18n="nav.slicer">Webtoon Slicer</span></button>
+        <button class="nav-item" data-route="filters"><span class="ni">◉</span><span class="nav-text" data-i18n="nav.filters">Filters &amp; FX</span></button>
+        <button class="nav-item" data-route="export"><span class="ni">↥</span><span class="nav-text" data-i18n="nav.export">Export Center</span></button>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-label" data-i18n="nav.system">SYSTEM</div>
+        <button class="nav-item" data-route="settings"><span class="ni">⚙</span><span class="nav-text" data-i18n="nav.settings">Settings</span></button>
+        <button class="nav-item" data-route="about"><span class="ni">ⓘ</span><span class="nav-text" data-i18n="nav.about">About &amp; Sources</span></button>
+      </div>
+
+      <div class="sidebar-unlimited">
+        <div class="su-title">✦ UNLIMITED EDITION</div>
+        <div class="su-row"><span>Credits</span><b>∞</b></div>
+        <div class="su-row"><span>Pages / comic</span><b>∞</b></div>
+        <div class="su-row"><span>Watermark</span><b>None</b></div>
+        <div class="su-row"><span>Account</span><b>Not required</b></div>
+        <div class="su-foot">All original limits removed.</div>
+      </div>
+    </div>
+  </aside>
+
+  <div id="main-column">
+    <header id="topbar">
+      <div class="tb-left">
+        <button class="icon-btn" id="btnExpand" title="Expand sidebar" style="display:none">›</button>
+        <div class="crumbs"><span id="crumbSection">Workspace</span><span class="crumb-sep">/</span><strong id="crumbPage">Dashboard</strong></div>
+      </div>
+      <div class="tb-right">
+        <div class="global-search"><span>⌕</span><input id="globalSearch" placeholder="Search projects, characters, styles…" autocomplete="off"><kbd>Ctrl+K</kbd></div>
+        <button class="icon-btn" id="btnTheme" title="Toggle theme (Ctrl+Shift+T)">☾</button>
+        <button class="icon-btn" id="btnHelp" title="About & Sources">?</button>
+        <button class="btn btn-primary btn-sm" id="btnQuickNew"><span>＋</span> <span data-i18n="common.newComic">New Comic</span></button>
+      </div>
+    </header>
+
+    <main id="view" tabindex="-1"></main>
+
+    <footer id="app-footer">
+      <div class="ft-left"><span class="ft-dot"></span><span id="ftStatus">Ready · offline engine active</span></div>
+      <div class="ft-center"><span id="ftMeta">AIComic Builder Studio v2.0.0 · Unlimited Edition</span></div>
+      <div class="ft-right">Design and Developed by <strong>Mr.Busy</strong></div>
+    </footer>
+  </div>
+</div>
+
+<div id="toast-stack" aria-live="polite"></div>
+<div id="modal-root"></div>
+<div id="lightbox" class="lightbox hidden"><img id="lightboxImg" alt="Preview"><button class="lightbox-close" id="lightboxClose">✕</button></div>
+
+<script src="js/data.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/store.js"></script>
+<script src="js/art.js"></script>
+<script src="js/views-core.js"></script>
+<script src="js/views-create.js"></script>
+<script src="js/views-editor.js"></script>
+<script src="js/views-tools.js"></script>
+<script src="js/views-system.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

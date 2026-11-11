@@ -1,0 +1,18 @@
+{
+  "name": "aicomicbuilder-studio",
+  "version": "2.0.0",
+  "productName": "AIComic Builder Studio",
+  "description": "Unlimited offline AI comic & manga creation studio — desktop edition, Design and Developed by Mr.Busy",
+  "main": "main.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "electron .",
+    "dist": "node build-portable.js",
+    "build:portable": "node build-portable.js"
+  },
+  "author": "Mr.Busy",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.2.0"
+  }
+}

@@ -1,0 +1,31 @@
+# ---- Dependencies ----
+node_modules/
+
+# ---- Built / portable output (269 MB, too large for GitHub) ----
+dist/
+out/
+*.asar
+
+# ---- Local validation artifacts ----
+_validation/
+_*.log
+_*.txt
+_electron_*.js
+_boot_*.js
+_test.html
+
+# ---- User data / runtime ----
+*.local
+userData/
+.DS_Store
+Thumbs.db
+desktop.ini
+npm-debug.log*
+*.tmp
+
+# ---- Editor / OS ----
+.vscode/
+.idea/
+*.swp
+
+# NOTE: .workbuddy-ai/ lives one level up in the workspace and is never committed.
