@@ -8,7 +8,8 @@
   "scripts": {
     "start": "electron .",
     "dist": "node build-portable.js",
-    "build:portable": "node build-portable.js"
+    "build:portable": "node build-portable.js",
+    "installer": "node build-installer.js"
   },
   "author": "Mr.Busy",
   "license": "MIT",

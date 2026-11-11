@@ -76,7 +76,10 @@ function createWindow() {
       label: 'Help',
       submenu: [
         { label: 'About & Sources', click: () => win.webContents.send('menu', 'about') },
-        { label: 'Keyboard Shortcuts', click: () => win.webContents.send('menu', 'settings') }
+        { label: 'Keyboard Shortcuts', click: () => win.webContents.send('menu', 'settings') },
+        { type: 'separator' },
+        { label: 'GitHub Repository · mrbusy1', click: () => win.webContents.send('menu', 'github') },
+        { label: 'Releases & Installer', click: () => win.webContents.send('menu', 'github-releases') }
       ]
     }
   ];
@@ -93,6 +96,15 @@ ipcMain.handle('save-data', async (event, payload) => {
     const buffer = Buffer.from(payload.data, 'base64');
     fs.writeFileSync(filePath, buffer);
     return { ok: true, path: filePath };
+  } catch (e) { return { ok: false, error: e.message }; }
+});
+
+/* Open external links in the user's default browser, never inside the app window */
+ipcMain.handle('open-external', async (event, url) => {
+  try {
+    if (typeof url !== 'string' || !/^https?:\/\/[^\s]+$/i.test(url)) return { ok: false };
+    await shell.openExternal(url);
+    return { ok: true };
   } catch (e) { return { ok: false, error: e.message }; }
 });
 

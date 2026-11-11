@@ -37,6 +37,88 @@
   };
   window.setStatus = function (t) { document.getElementById('ftStatus').textContent = t; };
 
+  /* ---------- GitHub · mrbusy1 ---------- */
+  const GH = D.GITHUB;
+
+  /* External links open in the real browser, never inside the app window.
+     Falls back to a normal new tab when running in browser app-mode. */
+  window.openExternal = function (url) {
+    if (window.desktop && window.desktop.openExternal) {
+      window.desktop.openExternal(url)
+        .then(r => { if (!r || r.ok === false) window.open(url, '_blank', 'noopener'); })
+        .catch(() => window.open(url, '_blank', 'noopener'));
+    } else {
+      window.open(url, '_blank', 'noopener');
+    }
+    window.setStatus('Opening GitHub in your browser…');
+  };
+
+  window.ghAbout = function () {
+    const row = (k, v) => '<div style="display:flex;justify-content:space-between;gap:14px;padding:7px 0;border-bottom:1px solid var(--border-soft)">' +
+      '<span style="color:var(--muted);font-size:12px">' + U.esc(k) + '</span>' +
+      '<b style="font-size:12px;text-align:right">' + U.esc(v) + '</b></div>';
+    const body =
+      '<p style="margin:0 0 16px;color:var(--text-2);line-height:1.65">' + U.esc(GH.note) + '</p>' +
+      '<div style="background:var(--surface-2);border:1px solid var(--border-soft);border-radius:12px;padding:6px 14px;margin-bottom:16px">' +
+        row('GitHub account', '@' + GH.owner) +
+        row('Repository', GH.owner + '/' + GH.repo) +
+        row('Visibility', GH.visibility) +
+        row('Default branch', GH.branch) +
+        row('License', GH.license) +
+        row('Built by', 'Mr.Busy') +
+      '</div>' +
+      '<p style="margin:0;color:var(--muted);font-size:11.5px;line-height:1.6">' +
+        'This desktop edition is offline-first: the app never contacts GitHub on its own. ' +
+        'Links open only when you click them. Your comics, characters and settings stay on this computer.</p>' +
+      '<div style="margin-top:16px;padding:12px;border-radius:10px;border:1px solid var(--accent-line);background:var(--accent-soft);font-size:12px">' +
+        '◆ ' + U.esc(GH.short) + '</div>';
+    U.openModal({
+      title: '◆ GitHub · @' + U.esc(GH.owner),
+      body,
+      footer: '<button class="btn" data-close>Close</button>' +
+              '<button class="btn" id="ghAboutProfile">Profile</button>' +
+              '<button class="btn" id="ghAboutReleases">Releases</button>' +
+              '<button class="btn btn-primary" id="ghAboutRepo">Open repository ↗</button>',
+      onMount: (m) => {
+        m.querySelector('#ghAboutProfile').onclick = () => window.openExternal(GH.profile);
+        m.querySelector('#ghAboutReleases').onclick = () => window.openExternal(GH.releases);
+        m.querySelector('#ghAboutRepo').onclick = () => window.openExternal(GH.url);
+      }
+    });
+  };
+
+  async function shareRepo() {
+    const data = {
+      title: 'AIComic Builder Studio — Unlimited Edition',
+      text: 'Unlimited offline AI comic & manga studio by Mr.Busy',
+      url: GH.url
+    };
+    try {
+      if (navigator.share) { await navigator.share(data); U.toast('Shared — thank you!', 'success'); return; }
+    } catch (e) { if (e && e.name === 'AbortError') return; }
+    try {
+      await navigator.clipboard.writeText(GH.url);
+      U.toast('Repository link copied to clipboard', 'success');
+      window.setStatus('GitHub link copied · ' + GH.short);
+    } catch (e) {
+      window.prompt('Copy the GitHub repository link:', GH.url);
+    }
+  }
+
+  (function bindGitHubPanel() {
+    const $ = U.$;
+    const urlText = $('#ghUrlText'); if (urlText) urlText.textContent = GH.short;
+    const repo = $('#ghRepoLink'); if (repo) repo.onclick = () => window.openExternal(GH.url);
+    const mini = $('#ghMini'); if (mini) mini.onclick = () => window.openExternal(GH.url);
+    const star = $('#ghStar');
+    if (star) star.onclick = () => {
+      window.openExternal(GH.url);
+      U.toast('Click the ★ Star button near the top-right of the GitHub page — thank you!', 'info', 7000);
+    };
+    const share = $('#ghShare'); if (share) share.onclick = () => { shareRepo(); };
+    const about = $('#ghAbout'); if (about) about.onclick = () => window.ghAbout();
+  })();
+
   /* ---------- router ---------- */
   window.go = function (r, params) {
     if (!V[r]) r = 'dashboard';
@@ -205,6 +287,8 @@
       if (action === 'new') { V.create.setDraft(null); window.go('create'); }
       else if (action === 'theme') document.getElementById('btnTheme').click();
       else if (action === 'backup') window.backupAll();
+      else if (action === 'github') window.openExternal(D.GITHUB.url);
+      else if (action === 'github-releases') window.openExternal(D.GITHUB.releases);
       else if (map[action]) window.go(map[action]);
     });
     document.getElementById('ftMeta').textContent = 'AIComic Builder Studio v2.0.0 · Electron Desktop · Unlimited Edition';

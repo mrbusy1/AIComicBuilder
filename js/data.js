@@ -5,6 +5,21 @@
    ============================================================ */
 window.ACB_DATA = (function () {
 
+  /* Official GitHub home of this desktop edition — Design and Developed by Mr.Busy */
+  const GITHUB = {
+    owner: 'mrbusy1',
+    repo: 'AIComicBuilder',
+    url: 'https://github.com/mrbusy1/AIComicBuilder',
+    profile: 'https://github.com/mrbusy1',
+    issues: 'https://github.com/mrbusy1/AIComicBuilder/issues',
+    releases: 'https://github.com/mrbusy1/AIComicBuilder/releases',
+    visibility: 'Public',
+    branch: 'main',
+    license: 'MIT',
+    short: 'github.com/mrbusy1/AIComicBuilder',
+    note: 'Open source, offline-first desktop studio. No account, no credits, no cloud — your comics stay on this machine.'
+  };
+
   const SOURCES = {
     primary: {
       name: 'AIComicBuilder / AIComic',
@@ -272,5 +287,5 @@ window.ACB_DATA = (function () {
     pt: { dashboard:'Painel', create:'Estúdio de criação', projects:'Meus projetos', editor:'Editor de quadrinhos', reader:'Leitor', characters:'Personagens', styles:'Lab de estilos', inspiration:'Inspiração', slicer:'Cortador Webtoon', filters:'Filtros e FX', export:'Central de exportação', settings:'Configurações', about:'Sobre e fontes', workspace:'ESPAÇO DE TRABALHO', library:'BIBLIOTECA', tools:'FERRAMENTAS', system:'SISTEMA', newComic:'Novo quadrinho', save:'Salvar', cancel:'Cancelar', delete:'Excluir', export2:'Exportar', generate:'Gerar', search:'Pesquisar' }
   };
 
-  return { SOURCES, STYLES, LAYOUTS, GENRES, TONES, AUDIENCES, LANGUAGES, CAMERAS, EXPRESSIONS, BUBBLE_TYPES, PROMPTS, FEATURED_CHARACTERS, COMMUNITY, LIMITS, FILTERS, EXPORT_FORMATS, WORDS, I18N };
+  return { GITHUB, SOURCES, STYLES, LAYOUTS, GENRES, TONES, AUDIENCES, LANGUAGES, CAMERAS, EXPRESSIONS, BUBBLE_TYPES, PROMPTS, FEATURED_CHARACTERS, COMMUNITY, LIMITS, FILTERS, EXPORT_FORMATS, WORDS, I18N };
 })();

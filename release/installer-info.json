@@ -1,0 +1,11 @@
+{
+  "app": "AIComic Builder Studio",
+  "version": "2.0.0",
+  "author": "Mr.Busy",
+  "builder": "NSIS",
+  "file": "AIComicBuilder-Studio-Setup-2.0.0.exe",
+  "bytes": 81127059,
+  "sha256": "a8921c72d9a0f87d2dc1496ae02df2083845803eab46b2b1f797dc82f9435f5d",
+  "repository": "https://github.com/mrbusy1/AIComicBuilder",
+  "builtAt": "2026-11-11T10:52:31.453Z"
+}

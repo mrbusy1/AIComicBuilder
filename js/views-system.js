@@ -139,7 +139,8 @@
       return V.head('About & Sources', 'Exactly what was fetched, what was rebuilt, and every limitation that was removed.') +
         '<div class="tabs" id="abTabs"><button class="active" data-t="sources">🌐 Source data</button>' +
         '<button data-t="limits">🔓 Limitations removed</button><button data-t="added">✦ Added functions</button>' +
-        '<button data-t="site">📋 Site reference</button></div><div id="abBody"></div>';
+        '<button data-t="site">📋 Site reference</button>' +
+        '<button data-t="github">◆ GitHub · mrbusy1</button></div><div id="abBody"></div>';
     },
     mount(root) {
       const P=D.SOURCES.primary, Q=D.SOURCES.secondary, body=U.$('#abBody',root);
@@ -169,6 +170,24 @@
             '</tbody></table><div class="small muted mt12">Credit usage: 1 AI panel ≈ 8–10 credits; an 8-panel comic ≈ 64 credits. None of this applies here.</div></div>';
         } else if(tab==='added'){
           body.innerHTML='<div class="grid grid-2">'+added.map(a=>'<div class="card pad-sm"><b>'+U.esc(a[0])+'</b><div class="small muted mt8">'+U.esc(a[1])+'</div></div>').join('')+'</div>';
+        } else if(tab==='github'){
+          const G=D.GITHUB;
+          body.innerHTML='<div class="grid grid-2">' +
+            '<div class="card"><div class="row-between mb8"><h3 style="margin:0">@'+U.esc(G.owner)+'</h3><span class="chip green">'+U.esc(G.visibility)+' repository</span></div>' +
+              '<div class="small mono mb12">'+U.esc(G.url)+'</div>' +
+              '<p class="small">'+U.esc(G.note)+'</p>' +
+              '<div class="row wrap mt16"><button class="btn btn-sm" id="abGhRepo">↗ Open repository</button>' +
+              '<button class="btn btn-sm" id="abGhStar">★ Give Star</button>' +
+              '<button class="btn btn-sm" id="abGhShare">↗ Share</button>' +
+              '<button class="btn btn-sm" id="abGhReleases">↓ Releases & installer</button></div></div>' +
+            '<div class="card"><h3 style="margin:0 0 12px">Repository details</h3>' +
+              '<div class="small muted" style="line-height:2">Owner: <b>@'+U.esc(G.owner)+'</b><br>Repo: <b>'+U.esc(G.repo)+'</b><br>Branch: <b>'+U.esc(G.branch)+'</b><br>License: <b>'+U.esc(G.license)+'</b><br>Credit: <b>Design and Developed by Mr.Busy</b></div>' +
+              '<div class="info-banner mt16"><span class="ib-icon">🔒</span><div>Offline-first: the app never contacts GitHub automatically. Links only open when you click them.</div></div></div></div>';
+          const r=U.$('#abGhRepo',root), s=U.$('#abGhStar',root), sh=U.$('#abGhShare',root), rel=U.$('#abGhReleases',root);
+          if(r) r.onclick=()=>window.openExternal(G.url);
+          if(rel) rel.onclick=()=>window.openExternal(G.releases);
+          if(s) s.onclick=()=>{window.openExternal(G.url);U.toast('Click the ★ Star button near the top-right of the GitHub page — thank you!','info',7000);};
+          if(sh) sh.onclick=()=>{window.openExternal(G.url);U.toast('Repository link: '+G.url,'info',7000);};
         } else {
           body.innerHTML='<div class="grid grid-2">' +
             '<div class="card"><h3 style="margin:0 0 12px">8-step advanced wizard</h3><ol class="small muted" style="line-height:2;padding-left:20px;margin:0">'+P.wizardSteps.map(x=>'<li>'+U.esc(x)+'</li>').join('')+'</ol>' +
